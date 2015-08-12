@@ -8,6 +8,7 @@ const TouchHover = gremlins.create('touch-hover', {
     mixins: [gremlinsJquery, dispatcher],
     events: {
         'touchstart': 'onTouchStart',
+        'touchmove': 'onTouchMove',
         'touchend': 'onTouchEnd',
         'click': 'onClick',
         'blur': 'onBlur',
@@ -15,41 +16,53 @@ const TouchHover = gremlins.create('touch-hover', {
     },
     initialize(){
         this._isActive = false;
-        this._$child = this.$el.children();
+        this._wasMoved = false;
+        this._$child   = this.$el.children();
 
         if (this._$child.length > 1) {
             throw new Error('A <touch-hover /> element needs a single child (the hovered element) to work!')
         }
     },
     getListeners(){
-      return {
-          ACTIVE_TOUCH_HOVER: 'onActiveChanged'
-      }
-    },
-    onTouchStart(){
-        console.log('touch start')
-    },
-    onTouchEnd(event){
-        console.log('touch end')
-        this._isActive = !this._isActive;
-        if (this._isActive) {
-            event.preventDefault();
-            console.log(event.target, event.currentTarget)
-            this._$child.focus();
-            this.emit(ACTIVE_TOUCH_HOVER,{
-                gremlin: this
-            });
+        return {
+            ACTIVE_TOUCH_HOVER: 'onActiveChanged'
         }
     },
+    onTouchStart(){
+        //console.log('touch start')
+    },
+    onTouchMove(){
+        this._wasMoved = true;
+    },
+    onTouchEnd(event){
+        if (!this._wasMoved) {
+
+            if (!this._isActive) {
+                event.preventDefault();
+                this._isActive = true;
+                this._$child.focus();
+                this.emit(ACTIVE_TOUCH_HOVER, {
+                    gremlin: this
+                });
+            } else {
+                this._$child.blur();
+            }
+        }
+        //console.log('touch end')
+
+        this._wasMoved = false;
+        return true;
+    },
     onBlur(event) {
+        console.log('on blur')
         this._isActive = false;
     },
     onClick(){
-        console.log('click')
+        //console.log('click')
     },
     onActiveChanged(data){
         if (data.gremlin !== this) {
-            console.log('active changed!')
+            //console.log('active changed!')
             this._isActive = false;
         }
     }
