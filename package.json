@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/DECAF/gremlin-touch-hover#readme",
   "dependencies": {
-    "gremlins": "^0.10.0",
+    "gremlins": "^0.11.0",
     "gremlins-dispatcher": "^0.5.0",
     "gremlins-jquery": "^0.5.1"
   },
