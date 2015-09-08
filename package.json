@@ -19,7 +19,7 @@
   "dependencies": {
     "gremlins": "^0.11.1",
     "gremlins-dispatcher": "^0.6.0",
-    "gremlins-jquery": "^0.5.1"
+    "gremlins-jquery": "^0.5.2"
   },
   "devDependencies": {
     "babel": "^5.8.19",
