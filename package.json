@@ -27,6 +27,16 @@
     "babelify": "^6.1.3"
   },
   "browserify": {
-    "transform": ["babelify"]
+    "transform": [
+      [
+        "babelify",
+        {
+          "optional": [
+            "es7.classProperties",
+            "runtime"
+          ]
+        }
+      ]
+    ]
   }
 }
