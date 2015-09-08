@@ -54,7 +54,6 @@ const TouchHover = gremlins.create('touch-hover', {
         return true;
     },
     onBlur(event) {
-        console.log('on blur')
         this._isActive = false;
     },
     onClick(){
